@@ -177,7 +177,7 @@ class EncodedFile(io.TextIOWrapper):
     def mode(self) -> str:
         # TextIOWrapper doesn't expose a mode, but at least some of our
         # tests check it.
-        return self.buffer.mode.replace("b", "")
+        return self.buffer.mode.replace("b", "")  # type: ignore[no-any-return,attr-defined]
 
 
 class CaptureIO(io.TextIOWrapper):
@@ -550,7 +550,7 @@ class FDCaptureBinary(FDCaptureBase[bytes]):
         res = self.tmpfile.buffer.read()
         self.tmpfile.seek(0)
         self.tmpfile.truncate()
-        return res
+        return res  # type: ignore[return-value]
 
     def writeorg(self, data: bytes) -> None:
         """Write to original file descriptor."""
