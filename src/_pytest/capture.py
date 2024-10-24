@@ -15,6 +15,7 @@ from types import TracebackType
 from typing import Any
 from typing import AnyStr
 from typing import BinaryIO
+from typing import cast
 from typing import Final
 from typing import final
 from typing import Generator
@@ -177,7 +178,8 @@ class EncodedFile(io.TextIOWrapper):
     def mode(self) -> str:
         # TextIOWrapper doesn't expose a mode, but at least some of our
         # tests check it.
-        return self.buffer.mode.replace("b", "")  # type: ignore[no-any-return,attr-defined]
+        assert hasattr(self.buffer, "mode")
+        return cast(str, self.buffer.mode.replace("b", ""))
 
 
 class CaptureIO(io.TextIOWrapper):
